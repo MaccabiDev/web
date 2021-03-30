@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Redirect } from "react-router-dom";
 
 import { addUser } from "./../../../state/user/usersState";
 
@@ -15,7 +14,6 @@ function UserProfileSettings() {
       email: emailInput.current?.value,
     };
     addUser(newUser);
-    return <Redirect to="/user" />;
   };
 
   return (
