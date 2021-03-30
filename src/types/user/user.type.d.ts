@@ -2,7 +2,8 @@ interface IUser {
     id: number,
     firstName: string,
     lastName: string,
-    email: string
+    email: string,
+    isUserProfileUpdated: boolean,
 }
 
 type UserState = {

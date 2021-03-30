@@ -24,7 +24,7 @@ const App: React.FC = () => {
   ]);
 
   return (
-    <main>
+    <main style={mainStyle}>
       <h1>Users</h1>
       <AddUser saveUser={saveUser} />
       {users.map((user: IUser) => (
@@ -39,6 +39,10 @@ const App: React.FC = () => {
       ))}
     </main>
   );
+};
+
+const mainStyle = {
+  margin: 30,
 };
 
 export default App;

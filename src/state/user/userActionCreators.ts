@@ -6,7 +6,7 @@ export function addUser(user: IUser) {
         user,
     }
 
-    return simulateHttpRequest(action)
+    return simulateHttpRequest(action, 100)
 }
 
 export function removeUser(user: IUser) {
@@ -15,7 +15,7 @@ export function removeUser(user: IUser) {
         user,
     }
 
-    return simulateHttpRequest(action)
+    return simulateHttpRequest(action, 50)
 }
 
 export function updateUser(user: IUser) {
@@ -24,13 +24,13 @@ export function updateUser(user: IUser) {
         user,
     }
 
-    return simulateHttpRequest(action)
+    return simulateHttpRequest(action, 10)
 }
 
-export function simulateHttpRequest(action: UserAction) {
+export function simulateHttpRequest(action: UserAction, timerMilliseconds: number) {
     return (dispatch: DispatchType) => {
         setTimeout(() => {
             dispatch(action)
-        }, 200)
+        }, timerMilliseconds)
     }
 }

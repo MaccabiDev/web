@@ -6,18 +6,21 @@ let UsersCollection: Array<any> = [
         firstName: "John",
         lastName: "Smith",
         email: "agent@smith.com",
+        isUserProfileUpdated: false,
     },
     {
         id: 2,
         firstName: "Ben",
         lastName: "Jonson",
         email: "ben@smith.com",
+        isUserProfileUpdated: false
     },
     {
         id: 3,
         firstName: "Guy",
         lastName: "Sharabani",
         email: "guy@smith.com",
+        isUserProfileUpdated: false
     },
 ];
 
@@ -26,7 +29,8 @@ export function addUser(user: any) {
         id: UsersCollection.length + 1,
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email
+        email: user.email,
+        isUserProfileUpdated: false
     };
     UsersCollection.push(newUser);
 }

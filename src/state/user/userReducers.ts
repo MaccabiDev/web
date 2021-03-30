@@ -7,9 +7,10 @@ const initialState: UserState = {
       firstName: "John",
       lastName: "Smith",
       email: "j@s.com",
+      isUserProfileUpdated: false,
     },
-    { id: 2, firstName: "Guy", lastName: "Show", email: "g@s.com" },
-    { id: 3, firstName: "Bob", lastName: "Sand", email: "b@s.com" },
+    { id: 2, firstName: "Guy", lastName: "Show", email: "g@s.com", isUserProfileUpdated: false },
+    { id: 3, firstName: "Bob", lastName: "Sand", email: "b@s.com", isUserProfileUpdated: false },
   ],
 };
 
@@ -24,6 +25,7 @@ const reducer = (
         firstName: action.user.firstName,
         lastName: action.user.lastName,
         email: action.user.email,
+        isUserProfileUpdated: false,
       };
       return {
         ...state,
@@ -37,12 +39,17 @@ const reducer = (
         ...state,
         users: updatedUsers,
       };
+    case UserActions.USER_ONKEYPRESS:
+      return {
+        ...state
+      };
     case UserActions.UPDATE_USER:
       const updateUser: IUser = {
         id: action.user.id, // not really unique
         firstName: `updated${Math.random().toString()}`,
         lastName: action.user.lastName,
         email: action.user.email,
+        isUserProfileUpdated: true,
       };
 
       const userToUpdate: IUser[] = state.users.filter(
