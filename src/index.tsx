@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, Store } from "redux";
 import { Provider } from "react-redux";

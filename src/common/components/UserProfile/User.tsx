@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
