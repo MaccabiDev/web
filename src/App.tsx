@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 
 import { User } from "./common/components/UserProfile/User";
