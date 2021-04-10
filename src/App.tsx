@@ -25,6 +25,7 @@ const App: React.FC = () => {
   return (
     <main style={mainStyle}>
       <h1>Users</h1>
+
       <AddUser saveUser={saveUser} />
       {users.map((user: IUser) => (
         <div>
