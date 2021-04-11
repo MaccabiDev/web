@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
-import YouTube from "./../../api/youtube";
-
-import Video from "../video/Video";
+import { Link } from "react-router-dom";
+import TheMovieDB from "./../../api/themovieDB";
+import DefaultVideoImage from "../../assets/images/default-video-pic.png";
 
 import {
   Card,
@@ -13,65 +12,95 @@ import {
   CardSubtitle,
   Row,
   Col,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 
 class Starter extends React.Component {
   state = {
     videos: [],
+    pageSize: 10,
+    pageNumber: 1,
     selectedVideo: null,
   };
 
   componentDidMount() {
-    const fetchData = async (termFromSearchBar) => {
-      const response = await YouTube.get("/search", {
-        params: {
-          q: "World news",
-        },
-      });
-      this.setState({
-        videos: response.data.items,
-      });
-
-      console.log(response.data.items);
-    };
-
-    fetchData();
+    this.fetchData(this.state.pageNumber);
   }
 
+  fetchData = async (pageNumber) => {
+    const themovieDBResponse = await TheMovieDB.get("/search/movie", {
+      params: {
+        query: "Action",
+        page: pageNumber,
+      },
+    });
+    this.setState({
+      videos: themovieDBResponse.data.results,
+    });
+    console.log(themovieDBResponse.data.results);
+  };
+
+  handlePageClick = (e) => {
+    e.preventDefault();
+    this.fetchData(e.currentTarget.innerText);
+  };
+
   render() {
+    const pageItems = [];
+    for (let index = 0; index < this.state.pageSize; index++) {
+      let page = index + 1;
+      pageItems.push(
+        <PaginationLink onClick={this.handlePageClick}>{page}</PaginationLink>
+      );
+    }
+
     return (
       <div>
-        <h5 className="mb-3">Top 50 videos</h5>
+        <h5 className="mb-3">Top Action Videos From ThemovieDB</h5>
+        <Row>
+          <Col xs="12" md="6">
+            <Card>
+              <CardBody className="">
+                <Pagination aria-label="Page navigation example">
+                  {pageItems.map((item, index) => (
+                    <PaginationItem key={index}>{item}</PaginationItem>
+                  ))}
+                </Pagination>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
         <Row>
           {this.state.videos.map((video, index) => (
-            <Col xs="12" md="4">
+            <Col xs="12" md="4" key={video.id}>
               {/* --------------------------------------------------------------------------------*/}
               {/* Card-1*/}
               {/* --------------------------------------------------------------------------------*/}
-              <Card key={video.id.videoId}>
+              <Card key={video.id}>
                 <CardImg
                   top
                   width="100%"
-                  src={video.snippet.thumbnails.high.url}
+                  src={
+                    video.poster_path != null
+                      ? "https://image.tmdb.org/t/p/w300" + video.poster_path
+                      : DefaultVideoImage
+                  }
                 />
                 <CardBody>
-                  <CardTitle>{video.snippet.title}</CardTitle>
+                  <CardTitle>{video.title}</CardTitle>
                   <CardSubtitle>
-                    {"Channel title: " + video.snippet.channelTitle}
+                    {"Original title: " + video.original_title}
                   </CardSubtitle>
-                  <CardText>{video.snippet.description}</CardText>
+                  <CardText>{video.overview}</CardText>
+
                   <Link
-                    to={"/video/video/" + video.id.videoId}
+                    to={"/video/video/" + video.id}
                     className="btn btn-primary"
-                    state={{ videoTitle: video.snippet.title }}
                   >
                     Read more...
                   </Link>
-                  <Route
-                    path={"/video/video/" + video.id.videoId}
-                    component={Video}
-                    state={{ videoTitle: video.snippet.title }}
-                  />
                 </CardBody>
               </Card>
             </Col>
