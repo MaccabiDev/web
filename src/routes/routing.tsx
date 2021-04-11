@@ -74,11 +74,11 @@ var ThemeRoutes = [
   //   icon: "mdi mdi-image-filter-vintage",
   //   component: TooltipComponent,
   // },
-  // {
-  //   path: "/",
-  //   pathTo: "/starter/starter",
-  //   name: "Search",
-  //   redirect: true,
-  // },
+  {
+    path: "/",
+    pathTo: "/starter/starter",
+    name: "Search",
+    redirect: true,
+  },
 ];
 export default ThemeRoutes;
