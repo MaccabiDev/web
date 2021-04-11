@@ -1,7 +1,19 @@
 import React from "react";
+import { Link, Route } from "react-router-dom";
 import YouTube from "./../../api/youtube";
 
-import { SocialCards } from "../../components/dashboard-components";
+import Video from "../video/Video";
+
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Row,
+  Col,
+} from "reactstrap";
 
 class Starter extends React.Component {
   state = {
@@ -13,7 +25,7 @@ class Starter extends React.Component {
     const fetchData = async (termFromSearchBar) => {
       const response = await YouTube.get("/search", {
         params: {
-          q: "Breaking news 4",
+          q: "World news",
         },
       });
       this.setState({
@@ -29,18 +41,42 @@ class Starter extends React.Component {
   render() {
     return (
       <div>
-        {this.state.videos.map((video, index) => (
-          <div key={video.id.videoId}>
-            <SocialCards
-              key={video.id.videoId}
-              videoId={video.id.videoId}
-              thumbnail={video.snippet.thumbnails.high.url}
-              channelTitle={video.snippet.channelTitle}
-              title={video.snippet.title}
-              description={video.snippet.description}
-            />
-          </div>
-        ))}
+        <h5 className="mb-3">Top 50 videos</h5>
+        <Row>
+          {this.state.videos.map((video, index) => (
+            <Col xs="12" md="4">
+              {/* --------------------------------------------------------------------------------*/}
+              {/* Card-1*/}
+              {/* --------------------------------------------------------------------------------*/}
+              <Card key={video.id.videoId}>
+                <CardImg
+                  top
+                  width="100%"
+                  src={video.snippet.thumbnails.high.url}
+                />
+                <CardBody>
+                  <CardTitle>{video.snippet.title}</CardTitle>
+                  <CardSubtitle>
+                    {"Channel title: " + video.snippet.channelTitle}
+                  </CardSubtitle>
+                  <CardText>{video.snippet.description}</CardText>
+                  <Link
+                    to={"/video/video/" + video.id.videoId}
+                    className="btn btn-primary"
+                    state={{ videoTitle: video.snippet.title }}
+                  >
+                    Read more...
+                  </Link>
+                  <Route
+                    path={"/video/video/" + video.id.videoId}
+                    component={Video}
+                    state={{ videoTitle: video.snippet.title }}
+                  />
+                </CardBody>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </div>
     );
   }

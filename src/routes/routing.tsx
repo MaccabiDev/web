@@ -24,9 +24,9 @@ var ThemeRoutes = [
     component: Search,
   },
   {
-    path: "/video",
-    //  name: "Video",
-    // icon: "mdi mdi-comment-processing-outline",
+    path: "/video/video",
+    name: "Video",
+    icon: "mdi mdi-comment-processing-outline",
     component: Video,
   },
   // {

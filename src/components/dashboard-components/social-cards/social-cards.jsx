@@ -36,7 +36,7 @@ const TechCards = (props) => {
             <div className="d-flex">
               <div className="read">
                 <a
-                  href={"/video/" + props.videoId}
+                  href={"#/video/video/" + props.videoId}
                   className="link font-medium"
                 >
                   Read More
