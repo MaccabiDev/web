@@ -2,8 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import indexRoutes from "./routes/index";
-import { Route, Switch } from "react-router-dom";
-import { HashRouter } from "react-router-dom";
+import { Route, Switch, HashRouter } from "react-router-dom";
 
 import "./assets/scss/style.css";
 

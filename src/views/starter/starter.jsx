@@ -14,13 +14,12 @@ import {
   Col,
   Pagination,
   PaginationItem,
-  PaginationLink,
 } from "reactstrap";
 
 class Starter extends React.Component {
   state = {
     videos: [],
-    pageSize: 10,
+    pageSize: 20,
     pageNumber: 1,
     selectedVideo: null,
   };
@@ -29,10 +28,21 @@ class Starter extends React.Component {
     this.fetchData(this.state.pageNumber);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.onRouteChanged();
+    }
+  }
+
+  onRouteChanged() {
+    const pageId = this.props.location.pathname.split("/")[3];
+    this.fetchData(pageId);
+  }
+
   fetchData = async (pageNumber) => {
     const themovieDBResponse = await TheMovieDB.get("/search/movie", {
       params: {
-        query: "Action",
+        query: "Sport",
         page: pageNumber,
       },
     });
@@ -52,7 +62,9 @@ class Starter extends React.Component {
     for (let index = 0; index < this.state.pageSize; index++) {
       let page = index + 1;
       pageItems.push(
-        <PaginationLink onClick={this.handlePageClick}>{page}</PaginationLink>
+        <Link className="page-link" to={"/starter/starter/" + page}>
+          {page}
+        </Link>
       );
     }
 
@@ -81,6 +93,7 @@ class Starter extends React.Component {
               <Card key={video.id}>
                 <CardImg
                   top
+                  alt={video.title}
                   width="100%"
                   src={
                     video.poster_path != null
